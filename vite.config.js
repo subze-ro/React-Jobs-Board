@@ -6,5 +6,15 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
-  }
-})
+
+    //adding a proxy so when we deploy the backend api localhost can still work
+    proxy: {
+      '/api':{
+        target:'http://localhost:8000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+
+        },
+      },
+    },
+  })
